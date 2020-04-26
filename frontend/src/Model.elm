@@ -21,6 +21,7 @@ type Msg
     = FetchSymbolInfo
       --  | ReceivedMessage (Result Http.Error String)
     | UpdateSymbol String
+    | EnterListener Int
     | NewsResponse (Result Http.Error News)
     | CompanyInfoResponse (Result Http.Error CompanyInfo)
     | QuoteResponse (Result Http.Error Quote)

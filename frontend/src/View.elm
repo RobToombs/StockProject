@@ -7,6 +7,7 @@ import Html exposing (Html, button, div, text)
 import Html.Events exposing (onClick)
 import Model exposing (..)
 import Types exposing (CompanyInfo, News, Quote)
+import ViewHelpers exposing (onKeyUp)
 
 
 view : Model -> Html Msg
@@ -35,10 +36,10 @@ fetchSymbolInput model =
         [ Grid.simpleRow
             [ Grid.col
                 [ Col.xs1 ]
-                [ button [ onClick FetchSymbolInfo ] [ text "Fetch Info" ] ]
+                [ Input.text [ Input.id "symbolInput", Input.small, Input.placeholder "Symbol", Input.onInput UpdateSymbol, Input.attrs [ onKeyUp EnterListener ] ] ]
             , Grid.col
                 [ Col.xs1 ]
-                [ Input.text [ Input.id "symbolInput", Input.small, Input.placeholder "Symbol", Input.onInput UpdateSymbol ] ]
+                [ button [ onClick FetchSymbolInfo ] [ text "Fetch Info" ] ]
             , Grid.col [ Col.xs1 ] [ createRow "Symbol:" model.news.symbol ]
             ]
         ]
@@ -46,11 +47,11 @@ fetchSymbolInput model =
 
 displayQuote : Quote -> List (Html Msg)
 displayQuote quote =
-    [ createRow "Current Price:" (String.fromFloat quote.c)
-    , createRow "Day High:" (String.fromFloat quote.h)
-    , createRow "Day Low:" (String.fromFloat quote.l)
-    , createRow "Opening Price:" (String.fromFloat quote.o)
-    , createRow "Previous Close Price:" (String.fromFloat quote.pc)
+    [ createRow "Current Price:" (dollars quote.c)
+    , createRow "Day High:" (dollars quote.h)
+    , createRow "Day Low:" (dollars quote.l)
+    , createRow "Opening Price:" (dollars quote.o)
+    , createRow "Previous Close Price:" (dollars quote.pc)
     ]
 
 
@@ -124,3 +125,8 @@ createSeparator title =
             [ Col.xs12 ]
             [ text title ]
         ]
+
+
+dollars : Float -> String
+dollars amount =
+    "$" ++ String.fromFloat amount

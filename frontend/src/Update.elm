@@ -2,6 +2,7 @@ module Update exposing (..)
 
 import HttpActions exposing (getCompanyInfo, getNewsUpdates, getQuote)
 import Model exposing (Model, Msg(..))
+import Task
 import Types exposing (premiumOnlyCompanyInfo)
 
 
@@ -25,6 +26,17 @@ update msg model =
         --            ( updatedModel, Cmd.none )
         UpdateSymbol symbol_ ->
             ( { model | symbol = symbol_ }, Cmd.none )
+
+        EnterListener key ->
+            let
+                result =
+                    if key == 13 then
+                        update FetchSymbolInfo model
+
+                    else
+                        ( model, Cmd.none )
+            in
+            result
 
         FetchSymbolInfo ->
             let
