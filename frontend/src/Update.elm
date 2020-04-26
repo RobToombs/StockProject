@@ -1,7 +1,8 @@
 module Update exposing (..)
 
-import HttpActions exposing (getNewsUpdates)
+import HttpActions exposing (getCompanyInfo, getNewsUpdates)
 import Model exposing (Model, Msg(..))
+import Types exposing (premiumOnlyCompanyInfo)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -25,8 +26,15 @@ update msg model =
         UpdateSymbol symbol_ ->
             ( { model | symbol = symbol_ }, Cmd.none )
 
-        FetchNewsUpdates ->
-            ( model, getNewsUpdates model.symbol )
+        FetchSymbolInfo ->
+            let
+                commands =
+                    Cmd.batch
+                        [ getNewsUpdates model.symbol
+                        , getCompanyInfo model.symbol
+                        ]
+            in
+            ( model, commands )
 
         NewsResponse result ->
             case result of
@@ -38,8 +46,20 @@ update msg model =
                     ( updatedModel, Cmd.none )
 
                 Err err ->
-                    let
-                        d =
-                            Debug.log "Error retrieving news updates" err
-                    in
                     ( model, Cmd.none )
+
+        CompanyInfoResponse result ->
+            case result of
+                Ok companyInfo_ ->
+                    let
+                        updatedModel =
+                            { model | companyInfo = companyInfo_ }
+                    in
+                    ( updatedModel, Cmd.none )
+
+                Err err ->
+                    let
+                        updatedModel =
+                            { model | companyInfo = premiumOnlyCompanyInfo }
+                    in
+                    ( updatedModel, Cmd.none )

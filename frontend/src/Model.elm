@@ -7,16 +7,18 @@ import Types exposing (..)
 type alias Model =
     { symbol : String
     , news : News
+    , companyInfo : CompanyInfo
     }
 
 
 defaultModel : Model
 defaultModel =
-    Model "" defaultNews
+    Model "" defaultNews defaultCompanyInfo
 
 
 type Msg
-    = FetchNewsUpdates
+    = FetchSymbolInfo
       --  | ReceivedMessage (Result Http.Error String)
     | UpdateSymbol String
     | NewsResponse (Result Http.Error News)
+    | CompanyInfoResponse (Result Http.Error CompanyInfo)
