@@ -8,12 +8,13 @@ type alias Model =
     { symbol : String
     , news : News
     , companyInfo : CompanyInfo
+    , quote : Quote
     }
 
 
 defaultModel : Model
 defaultModel =
-    Model "" defaultNews defaultCompanyInfo
+    Model "" defaultNews defaultCompanyInfo defaultQuote
 
 
 type Msg
@@ -22,3 +23,4 @@ type Msg
     | UpdateSymbol String
     | NewsResponse (Result Http.Error News)
     | CompanyInfoResponse (Result Http.Error CompanyInfo)
+    | QuoteResponse (Result Http.Error Quote)

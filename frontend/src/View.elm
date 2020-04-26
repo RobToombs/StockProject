@@ -6,7 +6,7 @@ import Bootstrap.Grid.Col as Col
 import Html exposing (Html, button, div, text)
 import Html.Events exposing (onClick)
 import Model exposing (..)
-import Types exposing (CompanyInfo, News)
+import Types exposing (CompanyInfo, News, Quote)
 
 
 view : Model -> Html Msg
@@ -22,6 +22,7 @@ contentContainer model =
     Grid.containerFluid []
         [ Grid.simpleRow
             [ Grid.col [ Col.xs4 ] (displayCompanyInfo model.companyInfo)
+            , Grid.col [ Col.xs4 ] (displayQuote model.quote)
             , Grid.col [ Col.xs4 ] (displayNews model.news)
             ]
         ]
@@ -41,6 +42,16 @@ fetchSymbolInput model =
             , Grid.col [ Col.xs1 ] [ createRow "Symbol:" model.news.symbol ]
             ]
         ]
+
+
+displayQuote : Quote -> List (Html Msg)
+displayQuote quote =
+    [ createRow "Current Price:" (String.fromFloat quote.c)
+    , createRow "Day High:" (String.fromFloat quote.h)
+    , createRow "Day Low:" (String.fromFloat quote.l)
+    , createRow "Opening Price:" (String.fromFloat quote.o)
+    , createRow "Previous Close Price:" (String.fromFloat quote.pc)
+    ]
 
 
 displayNews : News -> List (Html Msg)

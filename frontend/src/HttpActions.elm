@@ -5,7 +5,7 @@ import HttpHelpers exposing (createGet)
 import Json.Decode as Decode
 import Json.Decode.Pipeline exposing (optional, required)
 import Model exposing (Msg(..))
-import Types exposing (Buzz, CompanyInfo, News, Sentiment, defaultBuzz, defaultSentiment)
+import Types exposing (Buzz, CompanyInfo, News, Quote, Sentiment, defaultBuzz, defaultSentiment)
 
 
 getNewsUpdates : String -> Cmd Msg
@@ -24,6 +24,15 @@ getCompanyInfo symbol =
             "https://finnhub.io/api/v1/stock/profile?symbol=" ++ symbol ++ "&token=" ++ finnhubApiKey
     in
     Http.get <| createGet url CompanyInfoResponse companyInfoDecoder
+
+
+getQuote : String -> Cmd Msg
+getQuote symbol =
+    let
+        url =
+            "https://finnhub.io/api/v1/quote?symbol=" ++ symbol ++ "&token=" ++ finnhubApiKey
+    in
+    Http.get <| createGet url QuoteResponse quoteDecoder
 
 
 
@@ -94,6 +103,16 @@ companyInfoDecoder =
         |> optional "state" Decode.string ""
         |> optional "ticker" Decode.string ""
         |> optional "weburl" Decode.string ""
+
+
+quoteDecoder : Decode.Decoder Quote
+quoteDecoder =
+    Decode.succeed Quote
+        |> optional "c" Decode.float 0.0
+        |> optional "h" Decode.float 0.0
+        |> optional "l" Decode.float 0.0
+        |> optional "o" Decode.float 0.0
+        |> optional "pc" Decode.float 0.0
 
 
 finnhubApiKey : String

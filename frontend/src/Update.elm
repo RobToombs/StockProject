@@ -1,6 +1,6 @@
 module Update exposing (..)
 
-import HttpActions exposing (getCompanyInfo, getNewsUpdates)
+import HttpActions exposing (getCompanyInfo, getNewsUpdates, getQuote)
 import Model exposing (Model, Msg(..))
 import Types exposing (premiumOnlyCompanyInfo)
 
@@ -32,6 +32,7 @@ update msg model =
                     Cmd.batch
                         [ getNewsUpdates model.symbol
                         , getCompanyInfo model.symbol
+                        , getQuote model.symbol
                         ]
             in
             ( model, commands )
@@ -63,3 +64,15 @@ update msg model =
                             { model | companyInfo = premiumOnlyCompanyInfo }
                     in
                     ( updatedModel, Cmd.none )
+
+        QuoteResponse result ->
+            case result of
+                Ok quote_ ->
+                    let
+                        updatedModel =
+                            { model | quote = quote_ }
+                    in
+                    ( updatedModel, Cmd.none )
+
+                Err err ->
+                    ( model, Cmd.none )

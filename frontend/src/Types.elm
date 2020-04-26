@@ -77,3 +77,17 @@ defaultCompanyInfo =
 premiumOnlyCompanyInfo : CompanyInfo
 premiumOnlyCompanyInfo =
     CompanyInfo "Premium Account Only" "Premium Account Only" "Premium Account Only" "Premium Account Only" "Premium Account Only" "Premium Account Only" "Premium Account Only" "Premium Account Only" "Premium Account Only" "Premium Account Only" "Premium Account Only" "Premium Account Only" "Premium Account Only" "Premium Account Only" "Premium Account Only" 0.0 "Premium Account Only" "Premium Account Only" "Premium Account Only" "Premium Account Only" "Premium Account Only" "Premium Account Only" 0.0 "Premium Account Only" "Premium Account Only" "Premium Account Only"
+
+
+type alias Quote =
+    { o : Float
+    , h : Float
+    , l : Float
+    , c : Float
+    , pc : Float
+    }
+
+
+defaultQuote : Quote
+defaultQuote =
+    Quote 0.0 0.0 0.0 0.0 0.0
