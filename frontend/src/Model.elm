@@ -24,4 +24,5 @@ type Msg
     | EnterListener Int
     | NewsResponse (Result Http.Error News)
     | CompanyInfoResponse (Result Http.Error CompanyInfo)
-    | QuoteResponse (Result Http.Error Quote)
+    | QuoteResponse String (Result Http.Error Quote)
+    | SaveQuoteResponse (Result Http.Error Int)

@@ -1,9 +1,10 @@
 module HttpActions exposing (..)
 
 import Http exposing (Body, Expect, Header)
-import HttpHelpers exposing (createGet)
+import HttpHelpers exposing (createGet, createPutExpectEntity)
 import Json.Decode as Decode
 import Json.Decode.Pipeline exposing (optional, required)
+import Json.Encode as Encode
 import Model exposing (Msg(..))
 import Types exposing (Buzz, CompanyInfo, News, Quote, Sentiment, defaultBuzz, defaultSentiment)
 
@@ -32,20 +33,19 @@ getQuote symbol =
         url =
             "https://finnhub.io/api/v1/quote?symbol=" ++ symbol ++ "&token=" ++ finnhubApiKey
     in
-    Http.get <| createGet url QuoteResponse quoteDecoder
+    Http.get <| createGet url (QuoteResponse symbol) quoteDecoder
 
 
+saveQuote : String -> Quote -> Cmd Msg
+saveQuote symbol quote =
+    let
+        url =
+            "/api/quote"
 
---fetchHelloWorld : Cmd Msg
---fetchHelloWorld =
---    let
---        url_ =
---            "/api/hello"
---
---        expect_ =
---            Http.expectString ReceivedMessage
---    in
---    Http.get { url = url_, expect = expect_ }
+        body =
+            Http.jsonBody <| quoteEncoder symbol quote
+    in
+    Http.request <| createPutExpectEntity url body SaveQuoteResponse Decode.int
 
 
 newsDecoder : Decode.Decoder News
@@ -113,6 +113,18 @@ quoteDecoder =
         |> optional "l" Decode.float 0.0
         |> optional "o" Decode.float 0.0
         |> optional "pc" Decode.float 0.0
+
+
+quoteEncoder : String -> Quote -> Encode.Value
+quoteEncoder symbol quote =
+    Encode.object
+        [ ( "symbol", Encode.string symbol )
+        , ( "open", Encode.float quote.o )
+        , ( "high", Encode.float quote.h )
+        , ( "low", Encode.float quote.l )
+        , ( "current", Encode.float quote.c )
+        , ( "previousClose", Encode.float quote.pc )
+        ]
 
 
 finnhubApiKey : String

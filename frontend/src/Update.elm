@@ -1,8 +1,7 @@
 module Update exposing (..)
 
-import HttpActions exposing (getCompanyInfo, getNewsUpdates, getQuote)
+import HttpActions exposing (getCompanyInfo, getNewsUpdates, getQuote, saveQuote)
 import Model exposing (Model, Msg(..))
-import Task
 import Types exposing (premiumOnlyCompanyInfo)
 
 
@@ -77,14 +76,26 @@ update msg model =
                     in
                     ( updatedModel, Cmd.none )
 
-        QuoteResponse result ->
+        QuoteResponse symbol result ->
             case result of
                 Ok quote_ ->
                     let
                         updatedModel =
                             { model | quote = quote_ }
+
+                        saveQuoteRequest =
+                            saveQuote symbol quote_
                     in
-                    ( updatedModel, Cmd.none )
+                    ( updatedModel, saveQuoteRequest )
+
+                Err err ->
+                    ( model, Cmd.none )
+
+        SaveQuoteResponse result ->
+            case result of
+                Ok id ->
+                    -- Saved correctly, yeeehaw! Not doing anything with the DB id currently.
+                    ( model, Cmd.none )
 
                 Err err ->
                     ( model, Cmd.none )
