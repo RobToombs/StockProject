@@ -3,7 +3,7 @@ module HttpActions exposing (..)
 import Http exposing (Body, Expect, Header)
 import HttpHelpers exposing (createGet, createPutExpectEntity)
 import Json.Decode as Decode
-import Json.Decode.Pipeline exposing (optional, required)
+import Json.Decode.Pipeline exposing (optional)
 import Json.Encode as Encode
 import Model exposing (Msg(..))
 import Types exposing (Buzz, CompanyInfo, News, Quote, Sentiment, defaultBuzz, defaultSentiment)

@@ -80,10 +80,10 @@ premiumOnlyCompanyInfo =
 
 
 type alias Quote =
-    { o : Float
+    { c : Float
     , h : Float
     , l : Float
-    , c : Float
+    , o : Float
     , pc : Float
     }
 
