@@ -1,28 +1,23 @@
-What you will need installed to simply run:
-\
+What you will need installed to run the application without a backend:\
 **Node/npm**
-\
-**Java**
 
-\
-What you will need installed to develop:
-\
-_Required:_
-\
-**Node/npm**
-\
-**Java**
-\
+What you will need installed for the backend/develop:\
+_Required:_\
+**Node/npm**\
+**Java**\
+**Docker**\
+**Postgres**\
 **Elm**
 
-_Suggested:_
-\
-**IntelliJ**
-\
+_Suggested:_\
+**IntelliJ**\
 **Cygwin**
 
 -------------------------------------------------------------------------------------------------------------------
 **To start the Webpack Dev Server and Tomcat**
+The frontend application will work without the backend/database set up. It will handle requests and responses from the finnhub APIs, but it won't save any searches to the database.
+
+To set up the backend follow the instructions here: **_./backend/DB_instructions.md_**
 
 Windows:\
 Run "npm run start-w", to run the frontend/backend independently start up the webpack devServer with "npm run start:frontend" and tomcat with "npm run start:backend-w" or any IDE that supports SpringBoot applications.  
