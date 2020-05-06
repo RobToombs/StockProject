@@ -1,5 +1,7 @@
 module Types exposing (..)
 
+import Http
+
 
 type alias News =
     { buzz : Buzz
@@ -91,3 +93,13 @@ type alias Quote =
 defaultQuote : Quote
 defaultQuote =
     Quote 0.0 0.0 0.0 0.0 0.0
+
+
+type RequestType
+    = QuoteSearch
+
+
+type alias RequestError =
+    { errorType : RequestType
+    , error : Http.Error
+    }

@@ -9,17 +9,17 @@ type alias Model =
     , news : News
     , companyInfo : CompanyInfo
     , quote : Quote
+    , requestErrors : List RequestError
     }
 
 
 defaultModel : Model
 defaultModel =
-    Model "" defaultNews defaultCompanyInfo defaultQuote
+    Model "" defaultNews defaultCompanyInfo defaultQuote []
 
 
 type Msg
     = FetchSymbolInfo
-      --  | ReceivedMessage (Result Http.Error String)
     | UpdateSymbol String
     | EnterListener Int
     | NewsResponse (Result Http.Error News)

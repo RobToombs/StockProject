@@ -1,28 +1,14 @@
 module Update exposing (..)
 
+import Http
 import HttpActions exposing (getCompanyInfo, getNewsUpdates, getQuote, saveQuote)
 import Model exposing (Model, Msg(..))
-import Types exposing (premiumOnlyCompanyInfo)
+import Types exposing (RequestError, RequestType(..), premiumOnlyCompanyInfo)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        --ReceivedMessage result ->
-        --    case result of
-        --        Ok message_ ->
-        --            let
-        --                updatedModel =
-        --                    { model | message = message_ }
-        --            in
-        --            ( updatedModel, Cmd.none )
-        --
-        --        Err _ ->
-        --            let
-        --                updatedModel =
-        --                    { model | message = "Error receiving message from backend." }
-        --            in
-        --            ( updatedModel, Cmd.none )
         UpdateSymbol symbol_ ->
             ( { model | symbol = symbol_ }, Cmd.none )
 
@@ -92,10 +78,31 @@ update msg model =
                     ( model, Cmd.none )
 
         SaveQuoteResponse result ->
+            let
+                updatedErrorList =
+                    handleRequestError model.requestErrors result QuoteSearch
+            in
             case result of
                 Ok id ->
-                    -- Saved correctly, yeeehaw! Not doing anything with the DB id currently.
-                    ( model, Cmd.none )
+                    ( { model | requestErrors = updatedErrorList }, Cmd.none )
 
                 Err err ->
-                    ( model, Cmd.none )
+                    ( { model | requestErrors = updatedErrorList }, Cmd.none )
+
+
+handleRequestError : List RequestError -> Result Http.Error a -> RequestType -> List RequestError
+handleRequestError existing result errType =
+    let
+        filteredErrors =
+            List.filter (\error -> error.errorType /= errType) existing
+    in
+    case result of
+        Ok _ ->
+            filteredErrors
+
+        Err err ->
+            let
+                newError =
+                    RequestError errType err
+            in
+            List.append [ newError ] filteredErrors

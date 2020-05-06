@@ -12,7 +12,7 @@ class QuoteController(
 
     @PutMapping("/quote")
     fun quote(@RequestBody quote: Quote): ResponseEntity<Long> {
-        val id = quoteService.saveQuote(quote);
+        val id = quoteService.saveQuote(quote)
         return ResponseEntity(id, HttpStatus.CREATED)
     }
 }

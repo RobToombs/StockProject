@@ -1,21 +1,39 @@
 module View exposing (..)
 
+import Bootstrap.Alert exposing (simpleDanger)
 import Bootstrap.Form.Input as Input
 import Bootstrap.Grid as Grid
 import Bootstrap.Grid.Col as Col
 import Html exposing (Html, button, div, text)
 import Html.Events exposing (onClick)
 import Model exposing (..)
-import Types exposing (CompanyInfo, News, Quote)
-import ViewHelpers exposing (onKeyUp)
+import Types exposing (CompanyInfo, News, Quote, RequestError)
+import ViewHelpers exposing (errorToString, onKeyUp)
 
 
 view : Model -> Html Msg
 view model =
     div []
-        [ fetchSymbolInput model
+        [ errorContainer model
+        , fetchSymbolInput model
         , contentContainer model
         ]
+
+
+errorContainer : Model -> Html msg
+errorContainer model =
+    if List.isEmpty model.requestErrors then
+        div [] []
+
+    else
+        Grid.containerFluid
+            []
+            [ simpleDanger [] (createErrorMessages model.requestErrors) ]
+
+
+createErrorMessages : List RequestError -> List (Html msg)
+createErrorMessages errors =
+    List.map (\error -> text <| errorToString error.error) errors
 
 
 contentContainer : Model -> Html Msg

@@ -1,5 +1,6 @@
 package com.toombs.backend.quote
 
+import java.time.LocalDateTime
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -21,5 +22,7 @@ data class Quote (
 
     val current: Double = 0.0,
 
-    val previousClose: Double = 0.0
+    val previousClose: Double = 0.0,
+
+    val searchTime: LocalDateTime = LocalDateTime.now()
 )
