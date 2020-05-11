@@ -28,6 +28,11 @@ dependencies {
 	}
 }
 
+tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
+	mainClassName = "com.toombs.backend.Application"
+	launchScript()
+}
+
 tasks.withType<Test> {
 	useJUnitPlatform()
 }

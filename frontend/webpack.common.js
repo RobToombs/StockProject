@@ -12,22 +12,6 @@ module.exports = {
         extensions: ['.js', '.elm'],
         modules: ['node_modules']
     },
-    entry: [
-        `webpack-dev-server/client?http://localhost:9000`,
-        path.join(__dirname, 'static/index.js')
-    ],
-    devServer: {
-        historyApiFallback: true,
-        contentBase: './src',
-        hot: true,
-        port: 9000,
-        proxy: {
-            "/": {
-                target: `http://localhost:8080`,
-                changeOrigin: true
-            }
-        }
-    },
     module: {
         rules: [{
             test: /\.elm$/,
@@ -43,14 +27,14 @@ module.exports = {
                 }
             }]
         },
-        {
-            test: /\.s[ac]ss$/,
-            use: [
-                'style-loader',
-                'css-loader',
-                'sass-loader'
-            ]
-        }]
+            {
+                test: /\.s[ac]ss$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader'
+                ]
+            }]
     },
     plugins: [
         new HtmlWebpackPlugin({
