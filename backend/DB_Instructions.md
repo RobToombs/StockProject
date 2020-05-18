@@ -17,6 +17,8 @@ Notes for reference on setting up/running a local Postgres DB for development. V
     More info on the `alpine` image here: https://hub.docker.com/_/alpine
     
 6. Create a container to run our Postgres DB:\
+NOTE: I may screw up the username/password here to better fit our docker images, reference it against the application.yml/docker-compost.yml if things aren't working 
+
     `docker create -p 5432:5432 --name postgres -e POSTGRES_PASSWORD=admin --volumes-from PostgresData postgres`
     
     This does a few things:\

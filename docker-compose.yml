@@ -1,0 +1,37 @@
+version: '3'
+services:
+
+  db-postgres:
+    image: "postgres:12.2-alpine"
+    container_name: db-postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB:postgres
+      - POSTGRES_USER:postgres
+      - POSTGRES_PASSWORD:admin
+
+  backend-app:
+    build: ./backend-app
+    container_name: backend-app
+    environment:
+      - DB_SERVER=db-postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - 8080:8080
+    links:
+      - db-postgres
+
+  frontend-ui:
+    build: ./frontend-ui
+    container_name: frontend-ui
+    ports:
+      - 4200:80
+    links:
+      - backend-app
+
+
+volumes:
+  app-data:

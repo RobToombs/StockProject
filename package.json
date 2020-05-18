@@ -8,10 +8,9 @@
     "start:frontend": "cd frontend && npm start",
     "start:backend-m": "cd backend && ./gradlew clean bootrun",
     "start:backend-w": "cd backend && gradlew clean bootrun",
-    "build": "run-s build:frontend copyFrontend build:backend",
+    "build": "run-s build:frontend build:backend",
     "build:frontend": "cd frontend && npm run build",
-    "build:backend": "cd backend && gradlew assemble",
-    "copyFrontend": "cp -R frontend/dist/ backend/src/main/resources/static"
+    "build:backend": "cd backend && sed -i 's/\\r//' build_backend.sh && bash ./build_backend.sh"
   },
   "devDependencies": {
     "npm-run-all": "^4.1.5"

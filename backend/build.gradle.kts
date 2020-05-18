@@ -29,8 +29,12 @@ dependencies {
 }
 
 tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
-	mainClassName = "com.toombs.backend.Application"
+	mainClassName = "com.toombs.backend.ApplicationKt"
 	launchScript()
+}
+
+tasks.getByName<org.springframework.boot.gradle.tasks.run.BootRun>("bootRun") {
+	systemProperty("spring.profiles.active","development")
 }
 
 tasks.withType<Test> {
