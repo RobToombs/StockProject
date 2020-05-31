@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "start": "webpack-dev-server --hot --inline --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js"
+    "build": "webpack --config webpack.prod.js",
+    "dockerize": "sed -i 's/\\r//' dockerize.sh && bash ./dockerize.sh"
   },
   "dependencies": {
     "css-loader": "^3.5.3",

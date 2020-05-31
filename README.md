@@ -1,5 +1,14 @@
 Constantly evolving, currently Dockerizing everything to plop it on AWS.
 
+To build front and backend modules for containerizing:\
+`npm run build`
+
+Create all images/containers, stop all old running containers and create them from scratch:\
+`docker-compose up -d --force-recreate`
+
+Stop and remove all images:\
+`docker-compose down --rmi all`
+
 -------------------------------------------------------------------------------------------------------------------
 **To start the Webpack Dev Server and Tomcat**
 The frontend application will work without the backend/database set up. It will handle requests and responses from the finnhub APIs, but it won't save any searches to the database.
