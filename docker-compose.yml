@@ -14,8 +14,8 @@ services:
       - POSTGRES_PASSWORD:admin
 
   backend-app:
-    build: ./backend-app
-    container_name: backend-app
+    build: ./backend
+    container_name: backend
     environment:
       - DB_SERVER=db-postgres
       - POSTGRES_DB=postgres
@@ -25,13 +25,13 @@ services:
       - db-postgres
 
   frontend-ui:
-    build: ./frontend-ui
-    container_name: frontend-ui
+    build: ./frontend
+    container_name: frontend
     ports:
-      - 3000:80
+      - 9000:80
     links:
       - backend-app
 
 
 volumes:
-  app-data:
+  postgres-data:
