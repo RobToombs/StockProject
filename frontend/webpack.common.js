@@ -1,13 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
-const outputPath = path.join(__dirname, 'dist');
-
 module.exports = {
-    output: {
-        path: outputPath,
-        filename: 'index_bundle.js'
-    },
     resolve: {
         extensions: ['.js', '.elm'],
         modules: ['node_modules']
