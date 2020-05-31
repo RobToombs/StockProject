@@ -1,17 +1,4 @@
-What you will need installed to run the application without a backend:\
-**Node/npm**
-
-What you will need installed for the backend/develop:\
-_Required:_\
-**Node/npm**\
-**Java**\
-**Docker**\
-**Postgres**\
-**Elm**
-
-_Suggested:_\
-**IntelliJ**\
-**Cygwin**
+Constantly evolving, currently Dockerizing everything to plop it on AWS.
 
 -------------------------------------------------------------------------------------------------------------------
 **To start the Webpack Dev Server and Tomcat**
