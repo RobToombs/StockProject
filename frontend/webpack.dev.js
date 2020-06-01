@@ -8,6 +8,30 @@ module.exports = merge(common ,{
         `webpack-dev-server/client?http://localhost:9000`,
         path.join(__dirname, 'static/index.js')
     ],
+    module: {
+        rules: [{
+            test: /\.elm$/,
+            exclude: [/elm-stuff/, /node_modules/],
+            use: [{
+                loader: 'elm-webpack-loader',
+                options: {
+                    verbose: true,
+                    debug: true,
+                    files: [
+                        path.resolve(__dirname, 'src/Main.elm')
+                    ]
+                }
+            }]
+        },
+            {
+                test: /\.s[ac]ss$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader'
+                ]
+            }]
+    },
     devServer: {
         historyApiFallback: true,
         contentBase: './src',

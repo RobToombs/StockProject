@@ -12,12 +12,43 @@ module.exports = merge(common ,{
         path: outputPath,
         filename: 'index_bundle.js'
     },
+    module: {
+        rules: [{
+            test: /\.elm$/,
+            exclude: [/elm-stuff/, /node_modules/],
+            use: [{
+                loader: 'elm-webpack-loader',
+                options: {
+                    verbose: false,
+                    debug: false,
+                    files: [
+                        path.resolve(__dirname, 'src/Main.elm')
+                    ]
+                }
+            }]
+        },
+        {
+            test: /\.s[ac]ss$/,
+            use: [
+                'style-loader',
+                'css-loader',
+                'sass-loader'
+            ]
+        }]
+    },
     optimization: {
         minimizer: [
             new UglifyJsPlugin({
                 uglifyOptions: {
                     minimize:true,
-                    compress: {},
+                    compress: {
+                        pure_funcs: ['F2','F3','F4','F5','F6','F7','F8','F9','A2','A3','A4','A5','A6','A7','A8','A9'],
+                        pure_getters: true,
+                        keep_fargs: false,
+                        unsafe_comps: true,
+                        unsafe: true,
+                        passes: 3
+                    },
                     mangle:true
                 }
             })
