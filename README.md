@@ -9,6 +9,14 @@ Create all images/containers, stop all old running containers and create them fr
 Stop and remove all images:\
 `docker-compose down --rmi all`
 
+Tagging and Pushing Docker images to repo:\
+1. `docker tag stockproject_frontend-ui:latest robtoombs/stockproject:frontend`
+2. `docker push robtoombs/stockproject:frontend`
+3. `docker tag stockproject_backend-app:latest robtoombs/stockproject:backend`
+4. `docker push robtoombs/stockproject:backend`
+5. `docker tag alpine:latest robtoombs/stockproject:database`
+6. `docker push robtoombs/stockproject:database`
+
 -------------------------------------------------------------------------------------------------------------------
 **To start the Webpack Dev Server and Tomcat**
 The frontend application will work without the backend/database set up. It will handle requests and responses from the finnhub APIs, but it won't save any searches to the database.
